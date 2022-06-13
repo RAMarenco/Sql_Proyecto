@@ -18,5 +18,5 @@ CREATE TABLE USUARIO(
 		DEFAULT 'Dirección no disponible',
     fotografia VARBINARY(MAX) NOT NULL,
     institucion VARCHAR(50) NOT NULL,
-    id_RolUsuario INT NOT NULL
+    id_RolUsuario INT NOT NULL      --fk
 );
