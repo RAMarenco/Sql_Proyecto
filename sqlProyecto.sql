@@ -21,6 +21,11 @@ CREATE TABLE USUARIO(
     id_RolUsuario INT NOT NULL      --fk
 );
 
+CREATE TABLE ROLUSUARIO(
+    id_RolUsuario INT,
+    rol VARCHAR(20) NOT NULL UNIQUE
+);
+
 CREATE TABLE PRESTAMO (
     id_Prestamo INT NOT NULL, 
     fh_Prestamo DATETIME NOT NULL,
