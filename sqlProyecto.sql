@@ -50,3 +50,9 @@ CREATE TABLE PRESTAMO (
     id_UsuarioPresta INT NOT NULL,      -- fk
     id_Ejemplar INT NOT NULL            -- fk
 );
+
+CREATE TABLE RESERVA (
+    id_Reserva INT NOT NULL,
+    fh_Reserva DATETIME NOT NULL,
+    id_Prestamo INT NOT NULL            -- fk
+);
