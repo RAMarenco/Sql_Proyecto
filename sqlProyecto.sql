@@ -2,8 +2,10 @@ CREATE DATABASE BINAES_DB;
 GO
 USE BINAES_DB;
 
+--CREACION TABLAS--
+
 CREATE TABLE USUARIO(
-    id_Usuario VARCHAR(8),
+    id_Usuario VARCHAR(8) NOT NULL,
     nombre VARCHAR(50) NOT NULL,
     email VARCHAR(50) 
         NOT NULL 
@@ -18,12 +20,26 @@ CREATE TABLE USUARIO(
 		DEFAULT 'Dirección no disponible',
     fotografia VARBINARY(MAX) NOT NULL,
     institucion VARCHAR(50) NOT NULL,
-    id_RolUsuario INT NOT NULL      --fk
+    id_RolUsuario INT NOT NULL          -- fk
 );
 
 CREATE TABLE ROLUSUARIO(
     id_RolUsuario INT,
     rol VARCHAR(20) NOT NULL UNIQUE
+);
+
+CREATE TABLE VISITAS(
+    id_Usuario INT NOT NULL,            -- fk
+    id_Area INT NOT NULL                -- fk
+);
+
+CREATE TABLE AREA(
+    id_Area INT NOT NULL,
+    nombre VARCHAR(30) NOT NULL,
+    descripcion TEXT NOT NULL,
+    id_TipoArea INT NOT NULL,           -- fk
+    responsable INT NOT NULL,           -- fk
+    id_PisoArea INT NOT NULL,           -- fk
 );
 
 CREATE TABLE PRESTAMO (
