@@ -29,8 +29,11 @@ CREATE TABLE ROLUSUARIO(
 );
 
 CREATE TABLE VISITAS(
-    id_Usuario INT NOT NULL,            -- fk
-    id_Area INT NOT NULL                -- fk
+    id_Visita INT NOT NULL,
+    id_Usuario VARCHAR(8) NOT NULL,     -- fk
+    id_Area INT NOT NULL,               -- fk
+    fh_entrada DATETIME NOT NULL,       -- fk
+    fh_salida DATETIME NOT NULL         -- fk
 );
 
 CREATE TABLE AREA(
@@ -38,7 +41,7 @@ CREATE TABLE AREA(
     nombre VARCHAR(30) NOT NULL,
     descripcion TEXT NOT NULL,
     id_TipoArea INT NOT NULL,           -- fk
-    responsable INT NOT NULL,           -- fk
+    responsable VARCHAR(8) NOT NULL,    -- fk
     id_PisoArea INT NOT NULL,           -- fk
 );
 
@@ -46,9 +49,9 @@ CREATE TABLE PRESTAMO (
     id_Prestamo INT NOT NULL, 
     fh_Prestamo DATETIME NOT NULL,
     fh_Devolucion DATETIME NOT NULL,
-    id_Estado INT NOT NULL,             -- fk
-    id_UsuarioPresta INT NOT NULL,      -- fk
-    id_Ejemplar INT NOT NULL            -- fk
+    id_Estado INT NOT NULL,              -- fk
+    id_UsuarioPresta VARCHAR(8) NOT NULL,-- fk
+    id_Ejemplar INT NOT NULL             -- fk
 );
 
 CREATE TABLE RESERVA (
