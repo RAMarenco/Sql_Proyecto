@@ -56,3 +56,32 @@ CREATE TABLE RESERVA (
     fh_Reserva DATETIME NOT NULL,
     id_Prestamo INT NOT NULL            -- fk
 );
+
+CREATE TABLE ESTADOS (
+    id_Estado INT NOT NULL,
+    estado VARCHAR(20) NOT NULL,
+);
+
+CREATE TABLE EJEMPLAR (
+    id_Ejemplar INT NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
+    imagen VARBINARY(MAX) NOT NULL,
+    id_Editorial INT NOT NULL,          -- fk
+    id_Formato INT NOT NULL,            -- fk
+    id_Idioma INT NOT NULL,             -- fk
+    f_publicacion DATE NOT NULL,
+    id_ColeccionPertenece INT NOT NULL  -- fk
+);
+
+CREATE TABLE AUTORxEJEMPLAR (
+    id_Autor INT NOT NULL,
+    nombre VARCHAR(50) NOT NULL,
+    id_Ejemplar INT NOT NULL
+);
+
+CREATE TABLE P_CLAVExEJEMPLAR (
+    id_p_Clave INT NOT NULL,
+    p_clave VARCHAR(30) NOT NULL,
+    id_Ejemplar INT NOT NULL            -- fk
+);
+
