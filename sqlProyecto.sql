@@ -62,6 +62,22 @@ CREATE TABLE PISOAREA(
     pisoArea VARCHAR(10)
 );
 
+CREATE TABLE EVENTO(
+    id_Evento INT NOT NULL,             -- pk
+    titulo VARCHAR(100) NOT NULL,
+    imagen VARBINARY(MAX) NOT NULL,
+    capacidad INT NOT NULL,
+    id_AreaRealizacion INT NOT NULL,    -- fk
+    fh_Inicio DATETIME NOT NULL,
+    fh_Finalizacion DATETIME NOT NULL
+);
+
+CREATE TABLE OBJETIVOSxEVENTO(
+    id_Objetivo INT NOT NULL,           -- pk
+    Objetivo TEXT NOT NULL,
+    id_Evento INT NOT NULL              -- fk
+);
+
 CREATE TABLE PRESTAMO (
     id_Prestamo INT NOT NULL,           -- pk
     fh_Prestamo DATETIME NOT NULL,
