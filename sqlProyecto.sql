@@ -20,7 +20,15 @@ CREATE TABLE USUARIO(
 		DEFAULT 'Dirección no disponible',
     fotografia VARBINARY(MAX) NOT NULL,
     institucion VARCHAR(50) NOT NULL,
-    id_RolUsuario INT NOT NULL          -- fk
+    id_RolUsuario INT NOT NULL,         -- fk
+    contrasena BIT(256) NOT NULL
+);
+
+CREATE TABLE TOKEN(
+    id_Token INT NOT NULL,
+    TOKEN BIT(64) NOT NULL,
+    id_Usuario VARCHAR(8) NOT NULL,     --fk
+    fh_Expiracion DATETIME NOT NULL
 );
 
 CREATE TABLE ROLUSUARIO(
