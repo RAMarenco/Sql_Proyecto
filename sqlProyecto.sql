@@ -5,7 +5,7 @@ USE BINAES_DB;
 --CREACION TABLAS--
 
 CREATE TABLE USUARIO(
-    id_Usuario VARCHAR(8) NOT NULL,
+    id_Usuario VARCHAR(8) NOT NULL,     -- pk
     nombre VARCHAR(50) NOT NULL,
     email VARCHAR(50) 
         NOT NULL 
@@ -24,20 +24,20 @@ CREATE TABLE USUARIO(
 );
 
 CREATE TABLE ROLUSUARIO(
-    id_RolUsuario INT,
+    id_RolUsuario INT,                  -- pk
     rol VARCHAR(20) NOT NULL UNIQUE
 );
 
 CREATE TABLE VISITAS(
-    id_Visita INT NOT NULL,
+    id_Visita INT NOT NULL,             -- pk
     id_Usuario VARCHAR(8) NOT NULL,     -- fk
     id_Area INT NOT NULL,               -- fk
-    fh_entrada DATETIME NOT NULL,       -- fk
-    fh_salida DATETIME NOT NULL         -- fk
+    fh_entrada DATETIME NOT NULL,
+    fh_salida DATETIME NOT NULL
 );
 
 CREATE TABLE AREA(
-    id_Area INT NOT NULL,
+    id_Area INT NOT NULL,               -- pk
     nombre VARCHAR(30) NOT NULL,
     descripcion TEXT NOT NULL,
     id_TipoArea INT NOT NULL,           -- fk
@@ -45,8 +45,25 @@ CREATE TABLE AREA(
     id_PisoArea INT NOT NULL,           -- fk
 );
 
+CREATE TABLE HORARIOxAREA(
+    id_Horario INT NOT NULL,            -- pk
+    horaAbierto TIME NOT NULL,
+    horaCierre  TIME NOT NULL,
+    id_Area INT NOT NULL                -- fk
+);
+
+CREATE TABLE TIPOAREA(
+    id_TipoArea INT NOT NULL,           -- pk
+    tipoArea VARCHAR(30)                -- fk
+);
+
+CREATE TABLE PISOAREA(
+    id_PisoArea INT NOT NULL,           -- pk
+    pisoArea VARCHAR(10)
+);
+
 CREATE TABLE PRESTAMO (
-    id_Prestamo INT NOT NULL, 
+    id_Prestamo INT NOT NULL,           -- pk
     fh_Prestamo DATETIME NOT NULL,
     fh_Devolucion DATETIME NOT NULL,
     id_Estado INT NOT NULL,              -- fk
@@ -55,7 +72,7 @@ CREATE TABLE PRESTAMO (
 );
 
 CREATE TABLE RESERVA (
-    id_Reserva INT NOT NULL,
+    id_Reserva INT NOT NULL,            -- pk
     fh_Reserva DATETIME NOT NULL,
     id_Prestamo INT NOT NULL            -- fk
 );
@@ -66,7 +83,7 @@ CREATE TABLE ESTADOS (
 );
 
 CREATE TABLE EJEMPLAR (
-    id_Ejemplar INT NOT NULL,
+    id_Ejemplar INT NOT NULL,           -- pk
     nombre VARCHAR(100) NOT NULL,
     imagen VARBINARY(MAX) NOT NULL,
     id_Editorial INT NOT NULL,          -- fk
@@ -77,13 +94,13 @@ CREATE TABLE EJEMPLAR (
 );
 
 CREATE TABLE AUTORxEJEMPLAR (
-    id_Autor INT NOT NULL,
+    id_Autor INT NOT NULL,              -- pk
     nombre VARCHAR(50) NOT NULL,
-    id_Ejemplar INT NOT NULL
+    id_Ejemplar INT NOT NULL            -- fk
 );
 
 CREATE TABLE P_CLAVExEJEMPLAR (
-    id_p_Clave INT NOT NULL,
+    id_p_Clave INT NOT NULL,            -- pk
     p_clave VARCHAR(30) NOT NULL,
     id_Ejemplar INT NOT NULL            -- fk
 );
