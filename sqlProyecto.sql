@@ -91,7 +91,7 @@ CREATE TABLE PRESTAMO (
     fh_Prestamo DATETIME NOT NULL,
     fh_Devolucion DATETIME NOT NULL,
     id_Estado INT NOT NULL,              -- fk
-    id_UsuarioPresta VARCHAR(8) NOT NULL,-- fk
+    id_usuarioPresta VARCHAR(8) NOT NULL,-- fk
     id_Ejemplar INT NOT NULL             -- fk
 );
 
@@ -114,7 +114,7 @@ CREATE TABLE EJEMPLAR (
     id_Formato INT NOT NULL,            -- fk
     id_Idioma INT NOT NULL,             -- fk
     f_publicacion DATE NOT NULL,
-    id_ColeccionPertenece INT NOT NULL  -- fk
+    id_coleccionPertenece INT NOT NULL  -- fk
 );
 
 CREATE TABLE AUTORxEJEMPLAR (
@@ -127,5 +127,49 @@ CREATE TABLE P_CLAVExEJEMPLAR (
     id_p_Clave INT NOT NULL,            -- pk
     p_clave VARCHAR(30) NOT NULL,
     id_Ejemplar INT NOT NULL            -- fk
+);
+
+CREATE TABLE ETIQUETASxEJEMPLAR (
+    id_etiquetaEjemplar INT NOT NULL,    -- pk
+    id_Etiqueta INT NOT NULL,            -- fk
+    id_Ejemplar INT NOT NULL             -- fk
+);
+
+CREATE TABLE ETIQUETA (
+    id_Etiqueta INT NOT NULL,            -- pk
+    etiqueta VARCHAR(30) NOT NULL
+);
+
+CREATE TABLE EDITORIAL (
+    id_Editorial INT NOT NULL,           -- pk
+    editorial VARCHAR(60) NOT NULL
+);
+
+CREATE TABLE FORMATOEJEMPLAR (
+    id_formatoEjemplar INT NOT NULL,     -- pk
+    formato VARCHAR(30) NOT NULL  
+);
+
+CREATE TABLE IDIOMAEJEMPLAR (
+    id_idiomaEjemplar INT NOT NULL,      -- pk
+    idioma VARCHAR(30) NOT NULL
+);
+
+CREATE TABLE COLECCION (
+    id_Coleccion INT NOT NULL,           -- pk
+    nombre VARCHAR(50) NOT NULL,
+    id_tipoColeccion INT NOT NULL,       -- fk
+    id_Genero INT NOT NULL,              -- fk
+    id_areaPertenece INT NOT NULL        -- fk
+);
+
+CREATE TABLE TIPOCOLECCION (
+    id_tipoColeccion INT NOT NULL,       -- pk
+    tipoColeccion VARCHAR(30)
+);
+
+CREATE TABLE GENEROCOLECCION (
+    id_generoColeccion INT NOT NULL,     -- pk
+    generoColeccion VARCHAR(30) NOT NULL
 );
 
