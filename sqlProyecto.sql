@@ -20,7 +20,7 @@ CREATE TABLE USUARIO(
 		DEFAULT 'Dirección no disponible',
     fotografia VARBINARY(MAX) NOT NULL,
     institucion VARCHAR(50) NOT NULL,
-    id_RolUsuario INT NOT NULL,         -- fk
+    id_rolUsuario INT NOT NULL,         -- fk
     contrasena BINARY(256) NOT NULL
 );
 
@@ -32,7 +32,7 @@ CREATE TABLE TOKEN(
 );
 
 CREATE TABLE ROLUSUARIO(
-    id_RolUsuario INT NOT NULL,         -- pk
+    id_rolUsuario INT NOT NULL,         -- pk
     rol VARCHAR(20) NOT NULL UNIQUE
 );
 
@@ -48,9 +48,9 @@ CREATE TABLE AREA(
     id_Area INT NOT NULL,               -- pk
     nombre VARCHAR(30) NOT NULL,
     descripcion TEXT NOT NULL,
-    id_TipoArea INT NOT NULL,           -- fk
+    id_tipoArea INT NOT NULL,           -- fk
     responsable VARCHAR(8) NOT NULL,    -- fk
-    id_PisoArea INT NOT NULL,           -- fk
+    id_pisoArea INT NOT NULL,           -- fk
 );
 
 CREATE TABLE HORARIOxAREA(
@@ -61,12 +61,12 @@ CREATE TABLE HORARIOxAREA(
 );
 
 CREATE TABLE TIPOAREA(
-    id_TipoArea INT NOT NULL,           -- pk
+    id_tipoArea INT NOT NULL,           -- pk
     tipoArea VARCHAR(30)                -- fk
 );
 
 CREATE TABLE PISOAREA(
-    id_PisoArea INT NOT NULL,           -- pk
+    id_pisoArea INT NOT NULL,           -- pk
     pisoArea VARCHAR(10)
 );
 
@@ -75,7 +75,7 @@ CREATE TABLE EVENTO(
     titulo VARCHAR(100) NOT NULL,
     imagen VARBINARY(MAX) NOT NULL,
     capacidad INT NOT NULL,
-    id_AreaRealizacion INT NOT NULL,    -- fk
+    id_areaRealizacion INT NOT NULL,    -- fk
     fh_Inicio DATETIME NOT NULL,
     fh_Finalizacion DATETIME NOT NULL
 );
@@ -91,7 +91,7 @@ CREATE TABLE PRESTAMO (
     fh_Prestamo DATETIME NOT NULL,
     fh_Devolucion DATETIME NOT NULL,
     id_Estado INT NOT NULL,              -- fk
-    id_UsuarioPresta VARCHAR(8) NOT NULL,-- fk
+    id_usuarioPresta VARCHAR(8) NOT NULL,-- fk
     id_Ejemplar INT NOT NULL             -- fk
 );
 
@@ -114,7 +114,7 @@ CREATE TABLE EJEMPLAR (
     id_Formato INT NOT NULL,            -- fk
     id_Idioma INT NOT NULL,             -- fk
     f_publicacion DATE NOT NULL,
-    id_ColeccionPertenece INT NOT NULL  -- fk
+    id_coleccionPertenece INT NOT NULL  -- fk
 );
 
 CREATE TABLE AUTORxEJEMPLAR (
