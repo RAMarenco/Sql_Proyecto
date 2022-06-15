@@ -32,7 +32,7 @@ CREATE TABLE TOKEN(
 );
 
 CREATE TABLE ROLUSUARIO(
-    id_RolUsuario INT NOT NULL,                  -- pk
+    id_RolUsuario INT NOT NULL,         -- pk
     rol VARCHAR(20) NOT NULL UNIQUE
 );
 
