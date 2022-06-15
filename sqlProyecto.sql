@@ -21,7 +21,7 @@ CREATE TABLE USUARIO(
     fotografia VARBINARY(MAX) NOT NULL,
     institucion VARCHAR(50) NOT NULL,
     id_RolUsuario INT NOT NULL,         -- fk
-    contrasena BIT(256) NOT NULL
+    contrasena BINARY(256) NOT NULL
 );
 
 CREATE TABLE TOKEN(
