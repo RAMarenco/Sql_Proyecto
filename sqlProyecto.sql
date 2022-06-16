@@ -20,7 +20,9 @@ CREATE TABLE USUARIO(
 		DEFAULT 'Dirección no disponible',
     fotografia VARBINARY(MAX) NOT NULL,
     institucion VARCHAR(50) NOT NULL,
-    id_rolUsuario INT NOT NULL,         -- fk
+    id_rolUsuario INT 
+        NOT NULL
+        DEFAULT(0),                     -- fk
     contrasena BINARY(256) NOT NULL
 );
 
@@ -49,7 +51,9 @@ CREATE TABLE AREA(
     nombre VARCHAR(30) NOT NULL,
     descripcion TEXT NOT NULL,
     id_tipoArea INT NOT NULL,           -- fk
-    responsable VARCHAR(8) NOT NULL,    -- fk
+    responsable VARCHAR(8) 
+        NOT NULL 
+        DEFAULT("00000000"),            -- fk
     id_pisoArea INT NOT NULL,           -- fk
 );
 
@@ -174,3 +178,93 @@ CREATE TABLE GENEROCOLECCION (
 );
 
 --AGREGANDO PKs y FKs TABLAS--
+
+ALTER TABLE USUARIO ADD 
+    CONSTRAINT pk_usuario
+        PRIMARY KEY (id_Usuario),
+    CONSTRAINT fk_usuario_rolUsuario
+        FOREIGN KEY (id_rolUsuario) 
+        REFERENCES ROLUSUARIO (id_rolUsuario)
+            ON DELETE SET DEFAULT
+            ON UPDATE CASCADE;
+
+ALTER TABLE TOKEN ADD 
+    CONSTRAINT pk_token
+        PRIMARY KEY (id_Token),
+    CONSTRAINT fk_token_usuario
+        FOREIGN KEY (id_Usuario)
+        REFERENCES USUARIO (id_Usuario)
+            ON DELETE CASCADE
+            ON UPDATE CASCADE;
+
+ALTER TABLE ROLUSUARIO ADD
+    CONSTRAINT pk_rolUsuario
+        PRIMARY KEY(id_rolUsuario);
+
+ALTER TABLE VISITAS ADD
+    CONSTRAINT pk_visitas
+        PRIMARY KEY (id_Visita),
+    CONSTRAINT fk_visitas_usuario
+        FOREIGN KEY (id_Usuario)
+        REFERENCES USUARIO (id_Usuario)
+            ON DELETE NO ACTION
+	        ON UPDATE CASCADE,
+    CONSTRAINT fk_visitas_area
+        FOREIGN KEY (id_Area)
+        REFERENCES AREA (id_Area)
+            ON DELETE NO ACTION
+	        ON UPDATE CASCADE;
+
+ALTER TABLE AREA ADD
+    CONSTRAINT pk_area
+        PRIMARY KEY (id_Area),
+    CONSTRAINT fk_area_tipoArea
+        FOREIGN KEY (id_tipoArea)
+        REFERENCES TIPOAREA (id_tipoArea)
+            ON DELETE CASCADE
+            ON UPDATE CASCADE,
+    CONSTRAINT fk_area_responsable
+        FOREIGN KEY (responsable)
+        REFERENCES USUARIO (id_Usuario)
+            ON DELETE SET DEFAULT
+            ON UPDATE CASCADE,
+    CONSTRAINT fk_area_pisoArea
+        FOREIGN KEY (id_pisoArea)
+        REFERENCES PISOAREA (id_pisoArea)
+            ON DELETE CASCADE
+            ON UPDATE CASCADE;
+
+ALTER TABLE HORARIOxAREA ADD
+    CONSTRAINT pk_horarioxarea
+        PRIMARY KEY (id_Horario),
+    CONSTRAINT fk_horarioxarea_area
+        FOREIGN KEY (id_Area)
+        REFERENCES AREA (id_Area)
+            ON DELETE CASCADE
+            ON UPDATE CASCADE;
+
+ALTER TABLE TIPOAREA ADD
+    CONSTRAINT pk_tipoArea
+        PRIMARY KEY (id_tipoArea);
+
+ALTER TABLE PISOAREA ADD
+    CONSTRAINT pk_pisoArea
+        PRIMARY KEY (id_pisoArea);
+
+ALTER TABLE EVENTO ADD
+    CONSTRAINT pk_evento
+        PRIMARY KEY (id_Evento),
+    CONSTRAINT fk_evento_areaRealizacion
+        FOREIGN KEY (id_areaRealizacion)
+        REFERENCES AREA (id_Area)
+            ON DELETE CASCADE
+            ON UPDATE CASCADE;
+
+ALTER TABLE OBJETIVOSxEVENTO ADD
+    CONSTRAINT pk_objetivosxarea
+        PRIMARY KEY (id_Objetivo),
+    CONSTRAINT fk_objetivosxarea_evento
+        FOREIGN KEY (id_Evento)
+        REFERENCES EVENTO (id_Evento)
+            ON DELETE CASCADE
+            ON UPDATE CASCADE;
