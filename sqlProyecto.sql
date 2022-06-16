@@ -2,6 +2,8 @@ CREATE DATABASE BINAES_DB;
 GO
 USE BINAES_DB;
 
+DROP DATABASE BINAES_DB;
+
 --CREACION TABLAS--
 
 CREATE TABLE USUARIO(
@@ -22,7 +24,7 @@ CREATE TABLE USUARIO(
     institucion VARCHAR(50) NOT NULL,
     id_rolUsuario INT 
         NOT NULL
-        DEFAULT(0),                     -- fk
+        DEFAULT 0,                     -- fk
     contrasena BINARY(256) NOT NULL
 );
 
@@ -53,7 +55,7 @@ CREATE TABLE AREA(
     id_tipoArea INT NOT NULL,           -- fk
     responsable VARCHAR(8) 
         NOT NULL 
-        DEFAULT("00000000"),            -- fk
+        DEFAULT '00000000',             -- fk
     id_pisoArea INT NOT NULL,           -- fk
 );
 
@@ -179,6 +181,10 @@ CREATE TABLE GENEROCOLECCION (
 
 --AGREGANDO PKs y FKs TABLAS--
 
+ALTER TABLE ROLUSUARIO ADD
+    CONSTRAINT pk_rolUsuario
+        PRIMARY KEY(id_rolUsuario);
+
 ALTER TABLE USUARIO ADD 
     CONSTRAINT pk_usuario
         PRIMARY KEY (id_Usuario),
@@ -197,23 +203,13 @@ ALTER TABLE TOKEN ADD
             ON DELETE CASCADE
             ON UPDATE CASCADE;
 
-ALTER TABLE ROLUSUARIO ADD
-    CONSTRAINT pk_rolUsuario
-        PRIMARY KEY(id_rolUsuario);
+ALTER TABLE TIPOAREA ADD
+    CONSTRAINT pk_tipoArea
+        PRIMARY KEY (id_tipoArea);
 
-ALTER TABLE VISITAS ADD
-    CONSTRAINT pk_visitas
-        PRIMARY KEY (id_Visita),
-    CONSTRAINT fk_visitas_usuario
-        FOREIGN KEY (id_Usuario)
-        REFERENCES USUARIO (id_Usuario)
-            ON DELETE NO ACTION
-	        ON UPDATE CASCADE,
-    CONSTRAINT fk_visitas_area
-        FOREIGN KEY (id_Area)
-        REFERENCES AREA (id_Area)
-            ON DELETE NO ACTION
-	        ON UPDATE CASCADE;
+ALTER TABLE PISOAREA ADD
+    CONSTRAINT pk_pisoArea
+        PRIMARY KEY (id_pisoArea);
 
 ALTER TABLE AREA ADD
     CONSTRAINT pk_area
@@ -243,13 +239,19 @@ ALTER TABLE HORARIOxAREA ADD
             ON DELETE CASCADE
             ON UPDATE CASCADE;
 
-ALTER TABLE TIPOAREA ADD
-    CONSTRAINT pk_tipoArea
-        PRIMARY KEY (id_tipoArea);
-
-ALTER TABLE PISOAREA ADD
-    CONSTRAINT pk_pisoArea
-        PRIMARY KEY (id_pisoArea);
+ALTER TABLE VISITAS ADD
+    CONSTRAINT pk_visitas
+        PRIMARY KEY (id_Visita),
+    CONSTRAINT fk_visitas_usuario
+        FOREIGN KEY (id_Usuario)
+        REFERENCES USUARIO (id_Usuario)
+            ON DELETE NO ACTION
+	        ON UPDATE NO ACTION,
+    CONSTRAINT fk_visitas_area
+        FOREIGN KEY (id_Area)
+        REFERENCES AREA (id_Area)
+            ON DELETE NO ACTION
+	        ON UPDATE NO ACTION;
 
 ALTER TABLE EVENTO ADD
     CONSTRAINT pk_evento
