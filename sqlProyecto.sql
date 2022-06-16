@@ -2,8 +2,6 @@ CREATE DATABASE BINAES_DB;
 GO
 USE BINAES_DB;
 
-DROP DATABASE BINAES_DB;
-
 --CREACION TABLAS--
 
 CREATE TABLE USUARIO(
@@ -25,7 +23,7 @@ CREATE TABLE USUARIO(
     id_rolUsuario INT 
         NOT NULL
         DEFAULT 0,                     -- fk
-    contrasena BINARY(256) NOT NULL
+    contrasena VARBINARY(256) NOT NULL
 );
 
 CREATE TABLE TOKEN(
