@@ -250,7 +250,7 @@ ALTER TABLE VISITAS ADD
         FOREIGN KEY (id_Usuario)
         REFERENCES USUARIO (id_Usuario)
             ON DELETE NO ACTION
-	        ON UPDATE NO ACTION,
+	        ON UPDATE CASCADE,
     CONSTRAINT fk_visitas_area
         FOREIGN KEY (id_Area)
         REFERENCES AREA (id_Area)
