@@ -123,9 +123,14 @@ CREATE TABLE EJEMPLAR (
 );
 
 CREATE TABLE AUTORxEJEMPLAR (
-    id_Autor INT NOT NULL,              -- pk
-    nombre VARCHAR(50) NOT NULL,
+    id_autorEjemplar INT NOT NULL,      -- pk
+    id_Autor INT NOT NULL,              -- fk
     id_Ejemplar INT NOT NULL            -- fk
+);
+
+CREATE TABLE AUTOR (
+    id_Autor INT NOT NULL,
+    nombre VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE P_CLAVExEJEMPLAR (
@@ -136,13 +141,13 @@ CREATE TABLE P_CLAVExEJEMPLAR (
 
 CREATE TABLE ETIQUETASxEJEMPLAR (
     id_etiquetaEjemplar INT NOT NULL,    -- pk
-    id_Etiqueta INT NOT NULL,            -- fk
+    id_tipoEtiqueta INT NOT NULL,        -- fk
     id_Ejemplar INT NOT NULL             -- fk
 );
 
-CREATE TABLE ETIQUETA (
-    id_Etiqueta INT NOT NULL,            -- pk
-    etiqueta VARCHAR(30) NOT NULL
+CREATE TABLE TIPOETIQUETA (
+    id_tipoEtiqueta INT NOT NULL,         -- pk
+    tipoEtiqueta VARCHAR(4) NOT NULL
 );
 
 CREATE TABLE EDITORIAL (
@@ -161,11 +166,11 @@ CREATE TABLE IDIOMAEJEMPLAR (
 );
 
 CREATE TABLE COLECCION (
-    id_Coleccion INT NOT NULL,           -- pk
+    id_Coleccion INT NOT NULL,                  -- pk
     nombre VARCHAR(50) NOT NULL,
-    id_tipoColeccion INT NOT NULL,       -- fk
-    id_Genero INT NOT NULL,              -- fk
-    id_areaPertenece INT NOT NULL        -- fk
+    id_tipoColeccion INT NOT NULL,              -- fk
+    id_generoColeccion INT NOT NULL,            -- fk
+    id_areaPertenece INT NOT NULL DEFAULT 0     -- fk
 );
 
 CREATE TABLE TIPOCOLECCION (
@@ -268,4 +273,90 @@ ALTER TABLE OBJETIVOSxEVENTO ADD
         FOREIGN KEY (id_Evento)
         REFERENCES EVENTO (id_Evento)
             ON DELETE CASCADE
+            ON UPDATE CASCADE;
+
+
+ALTER TABLE TIPOCOLECCION ADD 
+    CONSTRAINT pk_tipoColeccion
+        PRIMARY KEY (id_tipoColeccion);
+    
+ALTER TABLE GENEROCOLECCION ADD
+    CONSTRAINT pk_generoColeccion
+        PRIMARY KEY (id_generoColeccion);
+
+ALTER TABLE COLECCION ADD
+    CONSTRAINT pk_Coleccion
+        PRIMARY KEY (id_Coleccion),
+    CONSTRAINT fk_coleccion_tipoColeccion
+        FOREIGN KEY (id_tipoColeccion)
+        REFERENCES TIPOCOLECCION (id_tipoColeccion)
+            ON DELETE CASCADE
+            ON UPDATE CASCADE,
+    CONSTRAINT fk_coleccion_generoColeccion
+        FOREIGN KEY (id_generoColeccion)
+        REFERENCES GENEROCOLECCION (id_generoColeccion)
+            ON DELETE CASCADE
+            ON UPDATE CASCADE,
+    CONSTRAINT fk_coleccion_area
+        FOREIGN KEY (id_areaPertenece)
+        REFERENCES AREA (id_Area)
+            ON DELETE SET DEFAULT
+            ON UPDATE CASCADE;
+
+ALTER TABLE AUTOR ADD
+    CONSTRAINT pk_Autor
+        PRIMARY KEY (id_Autor);
+
+ALTER TABLE TIPOETIQUETA ADD
+    CONSTRAINT pk_tipoEtiqueta
+        PRIMARY KEY (id_tipoEtiqueta);
+
+ALTER TABLE EDITORIAL ADD
+    CONSTRAINT pk_Editorial
+        PRIMARY KEY (id_Editorial);
+
+ALTER TABLE FORMATOEJEMPLAR ADD
+    CONSTRAINT pk_formatoEjemplar
+        PRIMARY KEY (id_formatoEjemplar);
+
+ALTER TABLE IDIOMAEJEMPLAR ADD
+    CONSTRAINT pk_idiomaEjemplar
+        PRIMARY KEY (id_idiomaEjemplar);
+
+ALTER TABLE EJEMPLAR ADD
+    CONSTRAINT pk_Ejemplar
+        PRIMARY KEY (id_Ejemplar),
+    CONSTRAINT fk_ejemplar_editorial
+        FOREIGN KEY (id_Editorial)
+        REFERENCES EDITORIAL (id_Editorial)
+            ON DELETE CASCADE
+            ON UPDATE CASCADE,
+    CONSTRAINT fk_ejemplar_formato
+        FOREIGN KEY (id_Formato)
+        REFERENCES FORMATOEJEMPLAR (id_formatoEjemplar)
+            ON DELETE CASCADE
+            ON UPDATE CASCADE,
+    CONSTRAINT fk_ejemplar_idioma
+        FOREIGN KEY (id_Idioma)
+        REFERENCES IDIOMAEJEMPLAR (id_idiomaEjemplar)
+            ON DELETE CASCADE
+            ON UPDATE CASCADE,
+    CONSTRAINT fk_ejemplar_coleccion
+        FOREIGN KEY (id_coleccionPertenece)
+        REFERENCES COLECCION (id_Coleccion)
+            ON DELETE CASCADE
+            ON UPDATE CASCADE;
+
+ALTER TABLE AUTORxEJEMPLAR ADD
+    CONSTRAINT pk_autorxejemplar
+        PRIMARY KEY (id_autorEjemplar),
+    CONSTRAINT fk_autorxejemplar_autor
+        FOREIGN KEY (id_Autor)
+        REFERENCES AUTOR (id_Autor)
+            ON DELETE NO ACTION
+            ON UPDATE CASCADE,
+    CONSTRAINT fk_autorxejemplar_ejemplar
+        FOREIGN KEY (id_Ejemplar)
+        REFERENCES EJEMPLAR (id_Ejemplar)
+            ON DELETE NO ACTION
             ON UPDATE CASCADE;
