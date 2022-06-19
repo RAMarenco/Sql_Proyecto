@@ -392,3 +392,12 @@ ALTER TABLE PRESTAMO ADD
         REFERENCES EJEMPLAR (id_Ejemplar)
             ON DELETE NO ACTION
             ON UPDATE NO ACTION;
+
+ALTER TABLE RESERVA ADD
+    CONSTRAINT pk_Reserva
+        PRIMARY KEY (id_Reserva),
+    CONSTRAINT fk_reserva_prestamo
+        FOREIGN KEY (id_Prestamo)
+        REFERENCES PRESTAMO (id_Prestamo)
+            ON DELETE CASCADE
+            ON UPDATE CASCADE;
