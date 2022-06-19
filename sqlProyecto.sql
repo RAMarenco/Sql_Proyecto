@@ -360,3 +360,35 @@ ALTER TABLE AUTORxEJEMPLAR ADD
         REFERENCES EJEMPLAR (id_Ejemplar)
             ON DELETE NO ACTION
             ON UPDATE CASCADE;
+
+ALTER TABLE P_CLAVExEJEMPLAR ADD
+    CONSTRAINT pk_clavexejemplar
+        PRIMARY KEY (id_p_Clave),
+    CONSTRAINT fk_clavexejemplar_ejemplar
+        FOREIGN KEY (id_Ejemplar)
+        REFERENCES EJEMPLAR (id_Ejemplar)
+            ON DELETE CASCADE
+            ON UPDATE CASCADE;
+
+ALTER TABLE ESTADOS ADD
+    CONSTRAINT pk_Estado
+        PRIMARY KEY (id_Estado);
+
+ALTER TABLE PRESTAMO ADD
+    CONSTRAINT pk_Prestamo
+        PRIMARY KEY (id_Prestamo),
+    CONSTRAINT fk_prestamo_estado
+        FOREIGN KEY (id_Estado)
+        REFERENCES ESTADOS (id_Estado)
+            ON DELETE CASCADE -- OJO PIROJO
+            ON UPDATE CASCADE,
+    CONSTRAINT fk_prestamo_usuario
+        FOREIGN KEY (id_usuarioPresta)
+        REFERENCES USUARIO (id_Usuario)
+            ON DELETE NO ACTION
+            ON UPDATE CASCADE,
+    CONSTRAINT fk_prestamo_ejemplar
+        FOREIGN KEY (id_Ejemplar)
+        REFERENCES EJEMPLAR (id_Ejemplar)
+            ON DELETE NO ACTION
+            ON UPDATE NO ACTION;
