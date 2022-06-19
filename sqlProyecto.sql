@@ -1,6 +1,6 @@
-CREATE DATABASE BINAES_DB;
+CREATE DATABASE binaes;
 GO
-USE BINAES_DB;
+USE binaes;
 
 --CREACION TABLAS--
 
@@ -27,19 +27,19 @@ CREATE TABLE USUARIO(
 );
 
 CREATE TABLE TOKEN(
-    id_Token INT NOT NULL,
+    id_Token INT NOT NULL IDENTITY(1,1),
     TOKEN BINARY(64) NOT NULL,
     id_Usuario VARCHAR(8) NOT NULL,     --fk
     fh_Expiracion DATETIME NOT NULL
 );
 
 CREATE TABLE ROLUSUARIO(
-    id_rolUsuario INT NOT NULL,         -- pk
+    id_rolUsuario INT NOT NULL IDENTITY(1,1),-- pk
     rol VARCHAR(20) NOT NULL UNIQUE
 );
 
 CREATE TABLE VISITAS(
-    id_Visita INT NOT NULL,             -- pk
+    id_Visita INT NOT NULL IDENTITY(1,1),-- pk
     id_Usuario VARCHAR(8) NOT NULL,     -- fk
     id_Area INT NOT NULL,               -- fk
     fh_entrada DATETIME NOT NULL,
@@ -47,7 +47,7 @@ CREATE TABLE VISITAS(
 );
 
 CREATE TABLE AREA(
-    id_Area INT NOT NULL,               -- pk
+    id_Area INT NOT NULL IDENTITY(1,1), -- pk
     nombre VARCHAR(30) NOT NULL,
     descripcion TEXT NOT NULL,
     id_tipoArea INT NOT NULL,           -- fk
@@ -58,24 +58,24 @@ CREATE TABLE AREA(
 );
 
 CREATE TABLE HORARIOxAREA(
-    id_Horario INT NOT NULL,            -- pk
+    id_Horario INT NOT NULL IDENTITY(1,1),-- pk
     horaAbierto TIME NOT NULL,
     horaCierre  TIME NOT NULL,
     id_Area INT NOT NULL                -- fk
 );
 
 CREATE TABLE TIPOAREA(
-    id_tipoArea INT NOT NULL,           -- pk
+    id_tipoArea INT NOT NULL IDENTITY(1,1),-- pk
     tipoArea VARCHAR(30)                -- fk
 );
 
 CREATE TABLE PISOAREA(
-    id_pisoArea INT NOT NULL,           -- pk
+    id_pisoArea INT NOT NULL IDENTITY(1,1),-- pk
     pisoArea VARCHAR(10)
 );
 
 CREATE TABLE EVENTO(
-    id_Evento INT NOT NULL,             -- pk
+    id_Evento INT NOT NULL IDENTITY(1,1),-- pk
     titulo VARCHAR(100) NOT NULL,
     imagen VARBINARY(MAX) NOT NULL,
     capacidad INT NOT NULL,
@@ -86,13 +86,13 @@ CREATE TABLE EVENTO(
 );
 
 CREATE TABLE OBJETIVOSxEVENTO(
-    id_Objetivo INT NOT NULL,           -- pk
+    id_Objetivo INT NOT NULL IDENTITY(1,1),-- pk
     Objetivo TEXT NOT NULL,
     id_Evento INT NOT NULL              -- fk
 );
 
 CREATE TABLE PRESTAMO (
-    id_Prestamo INT NOT NULL,           -- pk
+    id_Prestamo INT NOT NULL IDENTITY(1,1),-- pk
     fh_Prestamo DATETIME NOT NULL,
     fh_Devolucion DATETIME NOT NULL,
     id_Estado INT NOT NULL,              -- fk
@@ -101,18 +101,18 @@ CREATE TABLE PRESTAMO (
 );
 
 CREATE TABLE RESERVA (
-    id_Reserva INT NOT NULL,            -- pk
+    id_Reserva INT NOT NULL IDENTITY(1,1),-- pk
     fh_Reserva DATETIME NOT NULL,
     id_Prestamo INT NOT NULL            -- fk
 );
 
 CREATE TABLE ESTADOS (
-    id_Estado INT NOT NULL,
+    id_Estado INT NOT NULL IDENTITY(1,1),-- pk
     estado VARCHAR(20) NOT NULL,
 );
 
 CREATE TABLE EJEMPLAR (
-    id_Ejemplar INT NOT NULL,           -- pk
+    id_Ejemplar INT NOT NULL IDENTITY(1,1),-- pk
     nombre VARCHAR(100) NOT NULL,
     imagen VARBINARY(MAX) NOT NULL,
     id_Editorial INT NOT NULL,          -- fk
@@ -123,7 +123,7 @@ CREATE TABLE EJEMPLAR (
 );
 
 CREATE TABLE AUTORxEJEMPLAR (
-    id_autorEjemplar INT NOT NULL,      -- pk
+    id_autorEjemplar INT NOT NULL IDENTITY(1,1),-- pk
     id_Autor INT NOT NULL,              -- fk
     id_Ejemplar INT NOT NULL            -- fk
 );
@@ -134,39 +134,39 @@ CREATE TABLE AUTOR (
 );
 
 CREATE TABLE P_CLAVExEJEMPLAR (
-    id_p_Clave INT NOT NULL,            -- pk
+    id_p_Clave INT NOT NULL IDENTITY(1,1),-- pk
     p_clave VARCHAR(30) NOT NULL,
     id_Ejemplar INT NOT NULL            -- fk
 );
 
 CREATE TABLE ETIQUETASxEJEMPLAR (
-    id_etiquetaEjemplar INT NOT NULL,    -- pk
+    id_etiquetaEjemplar INT NOT NULL IDENTITY(1,1),-- pk
     id_tipoEtiqueta INT NOT NULL,        -- fk
     id_Ejemplar INT NOT NULL             -- fk
 );
 
 CREATE TABLE TIPOETIQUETA (
-    id_tipoEtiqueta INT NOT NULL,         -- pk
+    id_tipoEtiqueta INT NOT NULL IDENTITY(1,1),-- pk
     tipoEtiqueta VARCHAR(4) NOT NULL
 );
 
 CREATE TABLE EDITORIAL (
-    id_Editorial INT NOT NULL,           -- pk
+    id_Editorial INT NOT NULL IDENTITY(1,1),-- pk
     editorial VARCHAR(60) NOT NULL
 );
 
 CREATE TABLE FORMATOEJEMPLAR (
-    id_formatoEjemplar INT NOT NULL,     -- pk
+    id_formatoEjemplar INT NOT NULL IDENTITY(1,1),-- pk
     formato VARCHAR(30) NOT NULL  
 );
 
 CREATE TABLE IDIOMAEJEMPLAR (
-    id_idiomaEjemplar INT NOT NULL,      -- pk
+    id_idiomaEjemplar INT NOT NULL IDENTITY(1,1),-- pk
     idioma VARCHAR(30) NOT NULL
 );
 
 CREATE TABLE COLECCION (
-    id_Coleccion INT NOT NULL,                  -- pk
+    id_Coleccion INT NOT NULL IDENTITY(1,1),    -- pk
     nombre VARCHAR(50) NOT NULL,
     id_tipoColeccion INT NOT NULL,              -- fk
     id_generoColeccion INT NOT NULL,            -- fk
@@ -174,12 +174,12 @@ CREATE TABLE COLECCION (
 );
 
 CREATE TABLE TIPOCOLECCION (
-    id_tipoColeccion INT NOT NULL,       -- pk
+    id_tipoColeccion INT NOT NULL IDENTITY(1,1),-- pk
     tipoColeccion VARCHAR(30)
 );
 
 CREATE TABLE GENEROCOLECCION (
-    id_generoColeccion INT NOT NULL,     -- pk
+    id_generoColeccion INT NOT NULL IDENTITY(1,1),-- pk
     generoColeccion VARCHAR(30) NOT NULL
 );
 
