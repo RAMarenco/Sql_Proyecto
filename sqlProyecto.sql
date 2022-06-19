@@ -380,7 +380,7 @@ ALTER TABLE PRESTAMO ADD
     CONSTRAINT fk_prestamo_estado
         FOREIGN KEY (id_Estado)
         REFERENCES ESTADOS (id_Estado)
-            ON DELETE CASCADE -- OJO PIROJO
+            ON DELETE CASCADE
             ON UPDATE CASCADE,
     CONSTRAINT fk_prestamo_usuario
         FOREIGN KEY (id_usuarioPresta)
