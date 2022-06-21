@@ -80,7 +80,7 @@ CREATE TABLE EVENTO(
     imagen VARBINARY(MAX) NOT NULL,
     capacidad INT NOT NULL,
     id_areaRealizacion INT NOT NULL,    -- fk
-    aprobado BIT,
+    aprobado BIT NOT NULL,
     fh_Inicio DATETIME NOT NULL,
     fh_Finalizacion DATETIME NOT NULL
 );
