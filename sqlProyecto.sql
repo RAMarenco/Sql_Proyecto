@@ -401,3 +401,55 @@ ALTER TABLE RESERVA ADD
         REFERENCES PRESTAMO (id_Prestamo)
             ON DELETE CASCADE
             ON UPDATE CASCADE;
+
+ALTER TABLE ETIQUETASxEJEMPLAR ADD
+    CONSTRAINT pk_etiquetasxejemplar
+        PRIMARY KEY (id_etiquetaEjemplar),
+    CONSTRAINT fk_etiquetasxejemplar_tipoEtiqueta
+        FOREIGN KEY (id_tipoEtiqueta)
+        REFERENCES TIPOETIQUETA (id_tipoEtiqueta)
+            ON DELETE CASCADE
+            ON UPDATE CASCADE,
+    CONSTRAINT fk_etiquetasxejemplar_ejemplar
+        FOREIGN KEY (id_Ejemplar)
+        REFERENCES EJEMPLAR (id_Ejemplar)
+            ON DELETE CASCADE
+            ON UPDATE CASCADE;
+
+--AGREGANDO DATOS PRUEBA--
+
+INSERT INTO TIPOAREA (tipoArea) VALUES ('Salón lúdico');
+INSERT INTO TIPOAREA (tipoArea) VALUES ('Auditórium');
+INSERT INTO TIPOAREA (tipoArea) VALUES ('Sala de proyección');
+INSERT INTO TIPOAREA (tipoArea) VALUES ('Área de computación');
+INSERT INTO TIPOAREA (tipoArea) VALUES ('Área de promoción de inclusión');
+INSERT INTO TIPOAREA (tipoArea) VALUES ('Sala de investigación');
+INSERT INTO TIPOAREA (tipoArea) VALUES ('Área de biblioteca');
+
+INSERT INTO PISOAREA (pisoArea) VALUES ('Piso 1');
+INSERT INTO PISOAREA (pisoArea) VALUES ('Piso 2');
+INSERT INTO PISOAREA (pisoArea) VALUES ('Piso 3');
+INSERT INTO PISOAREA (pisoArea) VALUES ('Piso 4');
+
+INSERT INTO AREA (nombre, descripcion, id_tipoArea, responsable, id_pisoArea)
+VALUES ('Auditórium Juventud', 
+        'El Auditórium Juventud impulsa a los jóvenes a interactuar con el medio que les rodea y salir de su zona de comfort.',
+        2, 1, 1);
+
+INSERT INTO ESTADOS (estado) VALUES ('En ejecución');
+INSERT INTO ESTADOS (estado) VALUES ('Finalizado');
+INSERT INTO ESTADOS (estado) VALUES ('Reservado');
+
+INSERT INTO TIPOCOLECCION (tipoColeccion) VALUES ('Libro');
+INSERT INTO TIPOCOLECCION (tipoColeccion) VALUES ('Audio');
+
+INSERT INTO GENEROCOLECCION (generoColeccion) VALUES ('Investigación');
+INSERT INTO GENEROCOLECCION (generoColeccion) VALUES ('Autobiografía');
+
+-- COLECCION
+/* INSERT INTO COLECCION (nombre, id_tipoColeccion, id_generoColeccion, id_areaPertenece)
+VALUES*/
+
+-- EJEMPLAR
+/* INSERT INTO EJEMPLAR (nombre, imagen, id_Editorial, id_Formato, id_Idioma, f_publicacion, id_coleccionPertenece)
+VALUES () */
