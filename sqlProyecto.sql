@@ -136,13 +136,14 @@ CREATE TABLE AUTOR (
 CREATE TABLE P_CLAVExEJEMPLAR (
     id_p_Clave INT NOT NULL IDENTITY(1,1),-- pk
     p_clave VARCHAR(30) NOT NULL,
-    id_Ejemplar INT NOT NULL            -- fk
+    id_Ejemplar INT NOT NULL              -- fk
 );
 
 CREATE TABLE ETIQUETASxEJEMPLAR (
     id_etiquetaEjemplar INT NOT NULL IDENTITY(1,1),-- pk
     id_tipoEtiqueta INT NOT NULL,        -- fk
-    id_Ejemplar INT NOT NULL             -- fk
+    id_Ejemplar INT NOT NULL,            -- fk
+    etiqueta VARCHAR(20)
 );
 
 CREATE TABLE TIPOETIQUETA (
@@ -436,6 +437,11 @@ VALUES ('Auditórium Juventud',
         'El Auditórium Juventud impulsa a los jóvenes a interactuar con el medio que les rodea y salir de su zona de comfort.',
         2, 1, 1);
 
+INSERT INTO AREA (nombre, descripcion, id_tipoArea, responsable, id_pisoArea)
+VALUES ('Biblioteca Enigma', 
+        'La Biblioteca Enigma ofrece un área de concentración y estudio para los ciudadanos.',
+        7, 1, 2);
+
 INSERT INTO ESTADOS (estado) VALUES ('En ejecución');
 INSERT INTO ESTADOS (estado) VALUES ('Finalizado');
 INSERT INTO ESTADOS (estado) VALUES ('Reservado');
@@ -445,11 +451,34 @@ INSERT INTO TIPOCOLECCION (tipoColeccion) VALUES ('Audio');
 
 INSERT INTO GENEROCOLECCION (generoColeccion) VALUES ('Investigación');
 INSERT INTO GENEROCOLECCION (generoColeccion) VALUES ('Autobiografía');
+INSERT INTO GENEROCOLECCION (generoColeccion) VALUES ('Misterio');
 
--- COLECCION
-/* INSERT INTO COLECCION (nombre, id_tipoColeccion, id_generoColeccion, id_areaPertenece)
-VALUES*/
+INSERT INTO EDITORIAL (editorial) VALUES ('RBA Libros');
 
--- EJEMPLAR
-/* INSERT INTO EJEMPLAR (nombre, imagen, id_Editorial, id_Formato, id_Idioma, f_publicacion, id_coleccionPertenece)
-VALUES () */
+INSERT INTO FORMATOEJEMPLAR (formato) VALUES ('Digital');
+INSERT INTO FORMATOEJEMPLAR (formato) VALUES ('Físico');
+
+INSERT INTO IDIOMAEJEMPLAR (idioma) VALUES ('Español');
+
+INSERT INTO TIPOETIQUETA (tipoEtiqueta) VALUES ('isbn');
+INSERT INTO TIPOETIQUETA (tipoEtiqueta) VALUES ('issn');
+INSERT INTO TIPOETIQUETA (tipoEtiqueta) VALUES ('doi');
+
+INSERT INTO ETIQUETASxEJEMPLAR (id_tipoEtiqueta, id_Ejemplar, etiqueta) VALUES (1, 1, '9788491877004');
+
+INSERT INTO AUTOR (nombre) VALUES ('Arthur Conan Doyle');
+
+INSERT INTO AUTORxEJEMPLAR (id_Autor, id_Ejemplar) VALUES (1, 1);
+
+INSERT INTO COLECCION (nombre, id_tipoColeccion, id_generoColeccion, id_areaPertenece)
+VALUES ('The Sherlock Holmes Collection', 1, 3, 2)
+
+INSERT INTO EJEMPLAR (nombre, imagen, id_Editorial, id_Formato, id_Idioma, f_publicacion, id_coleccionPertenece)
+VALUES ('The Sherlock Holmes Collection: El sabueso de los Baskerville',
+        CAST('https://imagessl4.casadellibro.com/a/l/t5/04/9788491877004.jpg' AS VARBINARY(MAX)),
+        1, 2, 1, '2022-03-03', 1)
+
+INSERT INTO PRESTAMO (fh_Prestamo, fh_Devolucion, id_Estado, id_usuarioPresta, id_Ejemplar)
+VALUES ('2022-06-21 00:00:00.000', '2022-07-06 00:00:00.000', 1, 1, 1);
+
+INSERT INTO RESERVA (fh_Reserva, id_Prestamo) VALUES ('2022-07-07 00:00:00.000', 1);
