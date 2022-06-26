@@ -43,13 +43,14 @@ CREATE TABLE VISITAS(
     id_Usuario VARCHAR(8) NOT NULL,     -- fk
     id_Area INT NOT NULL,               -- fk
     fh_entrada DATETIME NOT NULL,
-    fh_salida DATETIME NOT NULL
+    fh_salida DATETIME NULL
 );
 
 CREATE TABLE AREA(
     id_Area INT NOT NULL IDENTITY(1,1), -- pk
     nombre VARCHAR(30) NOT NULL,
     descripcion TEXT NOT NULL,
+    capacidad INT NOT NULL DEFAULT 0,
     id_tipoArea INT NOT NULL,           -- fk
     responsable VARCHAR(8) 
         NOT NULL 
