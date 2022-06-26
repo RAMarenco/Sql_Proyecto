@@ -37,7 +37,6 @@ Interacción con la API
 
 ***
 
-<br>
 
 ## **Manual de usuario**
 ### *Aplicación informática BINAES*
