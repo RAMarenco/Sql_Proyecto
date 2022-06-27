@@ -144,7 +144,7 @@ CREATE TABLE ETIQUETASxEJEMPLAR (
     id_etiquetaEjemplar INT NOT NULL IDENTITY(1,1),-- pk
     id_tipoEtiqueta INT NOT NULL,        -- fk
     id_Ejemplar INT NOT NULL,            -- fk
-    etiqueta VARCHAR(20)
+    etiqueta VARCHAR(200) NOT NULL
 );
 
 CREATE TABLE TIPOETIQUETA (
