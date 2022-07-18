@@ -43,13 +43,14 @@ CREATE TABLE VISITAS(
     id_Usuario VARCHAR(8) NOT NULL,     -- fk
     id_Area INT NOT NULL,               -- fk
     fh_entrada DATETIME NOT NULL,
-    fh_salida DATETIME NOT NULL
+    fh_salida DATETIME NULL
 );
 
 CREATE TABLE AREA(
     id_Area INT NOT NULL IDENTITY(1,1), -- pk
     nombre VARCHAR(30) NOT NULL,
     descripcion TEXT NOT NULL,
+    capacidad INT NOT NULL DEFAULT 0,
     id_tipoArea INT NOT NULL,           -- fk
     responsable VARCHAR(8) 
         NOT NULL 
@@ -134,8 +135,8 @@ CREATE TABLE AUTOR (
 );
 
 CREATE TABLE P_CLAVExEJEMPLAR (
-    id_p_Clave INT NOT NULL IDENTITY(1,1),-- pk
-    p_clave VARCHAR(30) NOT NULL,
+    id_pClaveEjemplar INT NOT NULL IDENTITY(1,1),-- pk
+    id_p_Clave INT NOT NULL,
     id_Ejemplar INT NOT NULL              -- fk
 );
 
@@ -143,7 +144,7 @@ CREATE TABLE ETIQUETASxEJEMPLAR (
     id_etiquetaEjemplar INT NOT NULL IDENTITY(1,1),-- pk
     id_tipoEtiqueta INT NOT NULL,        -- fk
     id_Ejemplar INT NOT NULL,            -- fk
-    etiqueta VARCHAR(20)    
+    etiqueta VARCHAR(200) NOT NULL
 );
 
 CREATE TABLE TIPOETIQUETA (
@@ -182,6 +183,11 @@ CREATE TABLE TIPOCOLECCION (
 CREATE TABLE GENEROCOLECCION (
     id_generoColeccion INT NOT NULL IDENTITY(1,1),-- pk
     generoColeccion VARCHAR(30) NOT NULL
+);
+
+CREATE TABLE P_CLAVE (
+    id_p_Clave INT NOT NULL IDENTITY(1,1),      -- pk
+    p_clave VARCHAR(50) NOT NULL
 );
 
 --AGREGANDO PKs y FKs TABLAS--
@@ -308,6 +314,10 @@ ALTER TABLE AUTOR ADD
     CONSTRAINT pk_Autor
         PRIMARY KEY (id_Autor);
 
+ALTER TABLE P_CLAVE ADD
+    CONSTRAINT pk_pClave
+        PRIMARY KEY (id_p_Clave);
+
 ALTER TABLE TIPOETIQUETA ADD
     CONSTRAINT pk_tipoEtiqueta
         PRIMARY KEY (id_tipoEtiqueta);
@@ -354,17 +364,22 @@ ALTER TABLE AUTORxEJEMPLAR ADD
     CONSTRAINT fk_autorxejemplar_autor
         FOREIGN KEY (id_Autor)
         REFERENCES AUTOR (id_Autor)
-            ON DELETE NO ACTION
+            ON DELETE CASCADE
             ON UPDATE CASCADE,
     CONSTRAINT fk_autorxejemplar_ejemplar
         FOREIGN KEY (id_Ejemplar)
         REFERENCES EJEMPLAR (id_Ejemplar)
-            ON DELETE NO ACTION
+            ON DELETE CASCADE
             ON UPDATE CASCADE;
 
 ALTER TABLE P_CLAVExEJEMPLAR ADD
     CONSTRAINT pk_clavexejemplar
-        PRIMARY KEY (id_p_Clave),
+        PRIMARY KEY (id_pClaveEjemplar),
+    CONSTRAINT fk_clavexejemplar_pClave
+        FOREIGN KEY (id_p_Clave)
+        REFERENCES P_CLAVE (id_p_Clave)
+            ON DELETE CASCADE
+            ON UPDATE CASCADE,
     CONSTRAINT fk_clavexejemplar_ejemplar
         FOREIGN KEY (id_Ejemplar)
         REFERENCES EJEMPLAR (id_Ejemplar)
@@ -442,11 +457,6 @@ VALUES ('Biblioteca Enigma',
         'La Biblioteca Enigma ofrece un área de concentración y estudio para los ciudadanos.',
         7, 1, 2);
 
-INSERT INTO AREA (nombre, descripcion, id_tipoArea, responsable, id_pisoArea)
-VALUES ('Área de computación BINAES', 
-        'El área de computación BINAES brinda el espacio tecnológico adecuado para las actividades de los ciudadanos.',
-        4, '00000001', 3);    
-
 INSERT INTO ESTADOS (estado) VALUES ('En ejecución');
 INSERT INTO ESTADOS (estado) VALUES ('Finalizado');
 INSERT INTO ESTADOS (estado) VALUES ('Reservado');
@@ -470,19 +480,10 @@ INSERT INTO TIPOETIQUETA (tipoEtiqueta) VALUES ('issn');
 INSERT INTO TIPOETIQUETA (tipoEtiqueta) VALUES ('doi');
 
 INSERT INTO ETIQUETASxEJEMPLAR (id_tipoEtiqueta, id_Ejemplar, etiqueta) VALUES (1, 1, '9788491877004');
-INSERT INTO ETIQUETASxEJEMPLAR (id_tipoEtiqueta, id_Ejemplar, etiqueta) VALUES (1, 2, '9781234567897');
-INSERT INTO ETIQUETASxEJEMPLAR (id_tipoEtiqueta, id_Ejemplar, etiqueta) VALUES (1, 3, '9782123456803');
 
 INSERT INTO AUTOR (nombre) VALUES ('Arthur Conan Doyle');
-INSERT INTO AUTOR (nombre) VALUES ('J. K. Rowling');
-INSERT INTO AUTOR (nombre) VALUES ('J. R. R. Tolkien');
-INSERT INTO AUTOR (nombre) VALUES ('Jack Thorne');
 
 INSERT INTO AUTORxEJEMPLAR (id_Autor, id_Ejemplar) VALUES (1, 1);
-INSERT INTO AUTORxEJEMPLAR (id_Autor, id_Ejemplar) VALUES (2, 2);
-INSERT INTO AUTORxEJEMPLAR (id_Autor, id_Ejemplar) VALUES (3, 3);
-INSERT INTO AUTORxEJEMPLAR (id_Autor, id_Ejemplar) VALUES (4, 5);
-INSERT INTO AUTORxEJEMPLAR (id_Autor, id_Ejemplar) VALUES (3, 6);
 
 INSERT INTO COLECCION (nombre, id_tipoColeccion, id_generoColeccion, id_areaPertenece)
 VALUES ('The Sherlock Holmes Collection', 1, 3, 2)
@@ -495,31 +496,20 @@ VALUES ('The Sherlock Holmes Collection: El sabueso de los Baskerville',
 INSERT INTO PRESTAMO (fh_Prestamo, fh_Devolucion, id_Estado, id_usuarioPresta, id_Ejemplar)
 VALUES ('2022-06-21 00:00:00.000', '2022-07-06 00:00:00.000', 1, 1, 1);
 
-INSERT INTO PRESTAMO (fh_Prestamo, fh_Devolucion, id_Estado, id_usuarioPresta, id_Ejemplar)
-VALUES ('2022-05-13 00:00:00.000', '2022-05-28 00:00:00.000', 1, '00000003', 2);
-
 INSERT INTO RESERVA (fh_Reserva, id_Prestamo) VALUES ('2022-07-07 00:00:00.000', 1);
 
-INSERT INTO HORARIOxAREA (horaAbierto, horaCierre, id_Area) VALUES ('09:00:00', '18:00:00', 1);
-INSERT INTO HORARIOxAREA (horaAbierto, horaCierre, id_Area) VALUES ('08:00:00', '18:00:00', 2);
-INSERT INTO HORARIOxAREA (horaAbierto, horaCierre, id_Area) VALUES ('08:00:00', '16:00:00', 3);
+INSERT INTO P_CLAVE (p_clave) VALUES ('Ficción');
+INSERT INTO P_CLAVE (p_clave) VALUES ('Magia');
+INSERT INTO P_CLAVE (p_clave) VALUES ('Fantasía');
+INSERT INTO P_CLAVE (p_clave) VALUES ('Aventura');
+INSERT INTO P_CLAVE (p_clave) VALUES ('Misterio');
 
-INSERT INTO P_CLAVExEJEMPLAR (p_clave, id_Ejemplar) VALUES ('Misterio', 1);
-INSERT INTO P_CLAVExEJEMPLAR (p_clave, id_Ejemplar) VALUES ('Detective', 1);
-INSERT INTO P_CLAVExEJEMPLAR (p_clave, id_Ejemplar) VALUES ('Ficción', 2);
-INSERT INTO P_CLAVExEJEMPLAR (p_clave, id_Ejemplar) VALUES ('Magia', 2);
-INSERT INTO P_CLAVExEJEMPLAR (p_clave, id_Ejemplar) VALUES ('Fantasía', 3);
-INSERT INTO P_CLAVExEJEMPLAR (p_clave, id_Ejemplar) VALUES ('Aventura', 3);
-INSERT INTO P_CLAVExEJEMPLAR (p_clave, id_Ejemplar) VALUES ('Magia', 5);
-INSERT INTO P_CLAVExEJEMPLAR (p_clave, id_Ejemplar) VALUES ('Aventura', 5);
-INSERT INTO P_CLAVExEJEMPLAR (p_clave, id_Ejemplar) VALUES ('Fantasía', 6);
-INSERT INTO P_CLAVExEJEMPLAR (p_clave, id_Ejemplar) VALUES ('Aventura', 6);
-
-INSERT INTO VISITAS (id_Usuario, id_Area, fh_entrada, fh_salida)
-VALUES ('00000001', 1, '2022-06-15 10:15:00.000', '2022-06-15 11:30:00.000');
-
-INSERT INTO VISITAS (id_Usuario, id_Area, fh_entrada, fh_salida)
-VALUES ('00000003', 2, '2022-06-16 08:00:00.000', '2022-06-16 11:45:00.000');
-
-INSERT INTO VISITAS (id_Usuario, id_Area, fh_entrada, fh_salida)
-VALUES ('1', 2, '2022-06-16 08:15:00.000', '2022-06-16 11:50:00.000');
+INSERT INTO P_CLAVExEJEMPLAR (id_p_Clave, id_Ejemplar) VALUES (1, 2);
+INSERT INTO P_CLAVExEJEMPLAR (id_p_Clave, id_Ejemplar) VALUES (2, 2);
+INSERT INTO P_CLAVExEJEMPLAR (id_p_Clave, id_Ejemplar) VALUES (3, 3);
+INSERT INTO P_CLAVExEJEMPLAR (id_p_Clave, id_Ejemplar) VALUES (4, 3);
+INSERT INTO P_CLAVExEJEMPLAR (id_p_Clave, id_Ejemplar) VALUES (2, 5);
+INSERT INTO P_CLAVExEJEMPLAR (id_p_Clave, id_Ejemplar) VALUES (4, 5);
+INSERT INTO P_CLAVExEJEMPLAR (id_p_Clave, id_Ejemplar) VALUES (3, 6);
+INSERT INTO P_CLAVExEJEMPLAR (id_p_Clave, id_Ejemplar) VALUES (4, 6);
+INSERT INTO P_CLAVExEJEMPLAR (id_p_Clave, id_Ejemplar) VALUES (5, 1);
